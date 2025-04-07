@@ -7,8 +7,8 @@ const App = () => {
   return (
     <>
       {/* <Login/> */}
-      <EmpolyeeDashboard/>
-      {/* <AdminDashboard/> */}
+      {/* <EmpolyeeDashboard/> */}
+      <AdminDashboard/>
     </>
   )
 }
