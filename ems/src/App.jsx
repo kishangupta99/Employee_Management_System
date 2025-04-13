@@ -7,9 +7,7 @@ import AdminDashboard from './components/Dashboard/AdminDashboard';
 const App = () => {
   const [user, setUser] = useState(null);
   const [loggedInUserData, setLoggedInUserData] = useState(null);
-
   const authData = useContext(AuthContext);
-  console.log(authData);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('loggedInUser');
@@ -17,8 +15,10 @@ const App = () => {
     if (loggedInUser) {
       try {
         const userData = JSON.parse(loggedInUser);
-        if (userData.role && userData.data) { // Validate the structure of the stored data
-          setUser(userData.role);
+        if (userData.role === 'admin') {
+          setUser('admin');
+        } else if (userData.role === 'employee' && userData.data) {
+          setUser('employee');
           setLoggedInUserData(userData.data);
         } else {
           localStorage.removeItem('loggedInUser'); // Clear invalid data
@@ -48,15 +48,21 @@ const App = () => {
     }
   };
 
+  const handleLogout = () => {
+    setUser(null);
+    setLoggedInUserData(null);
+    localStorage.removeItem('loggedInUser');
+  };
+
   return (
     <>
       {!user ? (
         <Login handleLogin={handleLogin} />
       ) : (
         user === 'admin' ? (
-          <AdminDashboard />
+          <AdminDashboard handleLogout={handleLogout} />
         ) : (
-          user === 'employee' && <EmpolyeeDashboard data={loggedInUserData || {}} />
+          user === 'employee' && <EmpolyeeDashboard data={loggedInUserData || {}} handleLogout={handleLogout} />
         )
       )}
     </>
