@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Login = ({hamdleLogin}) => {
+const Login = ({handleLogin}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     
@@ -8,7 +8,7 @@ const Login = ({hamdleLogin}) => {
 const submitHandler =(e)=>{
     e.preventDefault()
     // Call the handleLogin function passed as a prop
-    hamdleLogin(email, password)
+    handleLogin(email, password)
     setEmail("")
     setPassword("")
   }
